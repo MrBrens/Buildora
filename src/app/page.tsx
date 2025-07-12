@@ -1,15 +1,18 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { ChevronRight, Sparkles, Zap, Palette, Code, Users, Star, ArrowRight, Play, CheckCircle, Globe, Rocket, Brain, Wand2 } from 'lucide-react';
 
 const BuildoraLanding = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     setIsVisible(true);
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
@@ -22,6 +25,18 @@ const BuildoraLanding = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Don't render anything until client-side hydration is complete
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-xl">Loading Buildora...</p>
+        </div>
+      </div>
+    );
+  }
 
   const features = [
     {
@@ -93,9 +108,9 @@ const BuildoraLanding = () => {
           <a href="#testimonials" className="hover:text-purple-300 transition-colors">Testimonials</a>
           <a href="#pricing" className="hover:text-purple-300 transition-colors">Pricing</a>
         </div>
-        <button className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-2 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+        <Link href="/login" className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-2 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 inline-block">
           Get Started
-        </button>
+        </Link>
       </nav>
 
       {/* Hero Section */}
@@ -122,10 +137,9 @@ const BuildoraLanding = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="group bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+              <Link href="/login" className="w- group bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 inline-block">
                 <span>Start Building Free</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
               
               <button className="group flex items-center space-x-2 text-gray-300 hover:text-white transition-colors">
                 <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:bg-white/20 transition-colors">
@@ -281,10 +295,10 @@ const BuildoraLanding = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
-            <button className="group bg-gradient-to-r from-purple-500 to-pink-500 px-10 py-5 rounded-full text-xl font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+            <Link href="/login" className="group bg-gradient-to-r from-purple-500 to-pink-500 px-10 py-5 rounded-full text-xl font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 inline-block">
               <span>Start Your Free Trial</span>
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center justify-center space-x-8 text-gray-400">
